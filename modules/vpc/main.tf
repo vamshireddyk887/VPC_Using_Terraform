@@ -1,4 +1,3 @@
-# Create a VPC with neccessary variables 
 resource "aws_vpc" "my_vpc" {
     cidr_block           = var.vpc_cidr
     enable_dns_support   = var.enable_dns_support
@@ -19,3 +18,4 @@ resource "aws_internet_gateway" "my_igw" {
         Name = var.igw_name
     }
 }
+

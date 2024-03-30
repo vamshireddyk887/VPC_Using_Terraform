@@ -1,26 +1,32 @@
-
 variable "vpc_id" {
-  description = "The VPC ID"
-  type        = string
-  default = ""
+  description = "The ID of the VPC where the subnets will be created."
+}
+
+variable "destination_cidr" {
+  description = "The destination CIDR block for the route tables."
+}
+
+variable "igw_id" {
+  description = "The ID of the internet gateway."
 }
 
 variable "subnet_cidr" {
-  description = "The CIDR block for the subnet"
-  type        = string
-  default     = "10.0.0.0/24"
+  description = "CIDR block for the subnets."
+  type        = list(string)
 }
 
-
 variable "availability_zone" {
-  description = "The availability zone"
-  type        = string
-  default     = "us-east-1a"
+  description = "Availability zone for the subnets."
+  type        = list(string)
 }
 
 variable "subnet_name" {
-  description = "The name of the subnet"
-  type        = string
-  default     = "my_subnet"
+  description = "Name of the subnets."
+  type        = list(string)
+}
+
+variable "nat_gateway_name" {
+  description = "Name of the NAT gateway."
+  type = string
 }
 

@@ -35,3 +35,8 @@ variable "igw_name" {
   type = string
   default = "my_igw"
 }
+variable "region" {
+  description = "The region in which the VPC will be created"
+  type = string
+  default = "us-east-1"
+}

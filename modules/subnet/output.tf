@@ -1,5 +1,24 @@
-# Create terraform output variables for the subnet IDs
-output "subnet_id" {
-  description = "The ID of the public subnet 1"
-  value       = aws_subnet.generic_subnet.id
+output "public_subnet_ids" {
+  description = "List of IDs for the created public subnets."
+  value       = aws_subnet.main_subnet[*].id
+}
+
+output "private_subnet_ids" {
+  description = "List of IDs for the created private subnets."
+  value       = aws_subnet.main_subnet[*].id
+}
+
+output "public_route_table_ids" {
+  description = "List of IDs for the created public route tables."
+  value       = aws_route_table.public_route_table[*].id
+}
+
+output "private_route_table_ids" {
+  description = "List of IDs for the created private route tables."
+  value       = aws_route_table.private_route_table[*].id
+}
+
+output "nat_gateway_id" {
+  description = "ID of the NAT gateway."
+  value       = aws_nat_gateway.nat_gateway[*].id
 }
