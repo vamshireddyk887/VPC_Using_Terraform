@@ -20,10 +20,14 @@ jobs:
       
     - name: Terraform Init
       run: terraform init
+      working-directory: Project
 
     - name: Terraform Plan
       run: terraform plan
+      working-directory: Project
+      
 
     - name: Apply Terraform changes
       run: terraform apply -auto-approve
+      working-directory: Project
 
