@@ -10,7 +10,7 @@ repos:
             entry: terraform
             language: system  
             files: \.tf$  
-            types: [terraform-fmt, terraform-validate]  
+            types: [exec]  
             args: 
               - fmt 
               - validate 
