@@ -10,35 +10,76 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
       
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: <v1.7.5> 
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Configure AWS credentials
-      run: |
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: <v1.7.5>
+
+      
+      - name: Configure AWS credentials
+        run: |
           echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
           echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
-      env:
+        env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       
-    - name: Terraform Init
-      run: terraform init
-      working-directory: Project
+      - name: Terraform Init
+        run: terraform init
+        working-directory: Project
 
-    - name: Terraform Plan
-      run: terraform plan
-      working-directory: Project
       
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: Project
 
-    - name: Apply Terraform changes
-      run: terraform apply -auto-approve
-      working-directory: Project
+      
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve
+        working-directory: Project
 
-    - name: Terraform destroy
-      run: terraform destroy
-      working-directory: Project
+  
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      
+      - name: Set up pre-commit hooks
+        run: |
+          cd Project
+          pre-commit install
+        env:
+          PRE_COMMIT_HOME: $HOME/.cache/pre-commit
+
+      
+      - name: Run pre-commit hooks
+        run: |
+          cd Project
+          pre-commit run --all-files
+        env:
+          PRE_COMMIT_HOME: $HOME/.cache/pre-commit
+
+      
+      - name: Install TFLint
+        run: |
+          wget https://github.com/terraform-linters/tflint/releases/download/v0.50.3/tflint_linux_amd64.zip
+          unzip tflint_linux_amd64.zip
+          sudo mv tflint /usr/local/bin/
+
+      
+      - name: Run TFLint
+        run: tflint
+        working-directory: Project
+
+  
+      - name: Terraform destroy
+        run: terraform destroy
+        working-directory: Project
+
+      - name: Cleanup
+        run: rm -rf .terraform
