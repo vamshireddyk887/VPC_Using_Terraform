@@ -1,6 +1,5 @@
 repos:
   - repo: https://github.com/vamshireddyk887/VPC_Using_Terraform.git
-    rev: main
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
