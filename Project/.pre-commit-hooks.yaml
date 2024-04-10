@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/vamshireddyk887/VPC_Using_Terraform.git
+    rev: main
+    hooks:
+      - id: terraform
+        name: Terraform Format and Validate
+        entry: terraform
+        language: system
+        files: \.tf$
+        types: [terraform]
+        args:
+          - fmt
+          - validate
